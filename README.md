@@ -29,9 +29,9 @@ Upload a requirements PDF → Get architecture design, UML diagrams, database sc
 
 **Try it now:**
 
-- 📱 **Mobile App**: [Open in Expo](exp://exp.host/@farooqkhansa/archgen-app)
-- 🌐 **Backend API**: [API Documentation](https://archgen-ai-backend.onrender.com/docs)
-- 💻 **Health Check**: [Test Endpoint](https://archgen-ai-backend.onrender.com/health)
+- 📱 **Mobile App**: [React Native with Expo](exp://exp.host/@farooqkhansa/archgen-app)
+- 🌐 **Backend API**: [API Documentation](https://archgenerationai-production.up.railway.app/docs)
+- 💻 **Health Check**: [Test Endpoint](https://archgenerationai-production.up.railway.app/health)
 
 ---
 
@@ -63,7 +63,7 @@ Upload a requirements PDF → Get architecture design, UML diagrams, database sc
 
 ### 📦 Production Ready
 
-- Cloud-deployed backend (Glitch/Heroku/Railway)
+- Cloud-deployed backend (Railway)
 - Mobile app published (Expo)
 - Complete error handling and fallback responses
 - Execution tracing for transparency
@@ -73,25 +73,28 @@ Upload a requirements PDF → Get architecture design, UML diagrams, database sc
 ## 🛠️ Technology Stack
 
 ### Backend
-FastAPI 0.104          - Modern Python web framework
-Python 3.11            - Latest Python version
-Google Antigravity     - Managed AI agents (5 agents)
-google-genai SDK       - Official Gemini API
-PyMuPDF               - PDF text extraction
-fpdf2                 - PDF report generation
-Pydantic              - Data validation
-uvicorn               - ASGI server
+- FastAPI 0.104 - Modern Python web framework
+- Python 3.11 - Latest Python version
+- Google Antigravity - Managed AI agents (5 agents)
+- google-genai SDK - Official Gemini API
+- PyMuPDF - PDF text extraction
+- fpdf2 - PDF report generation
+- Pydantic - Data validation
+- uvicorn - ASGI server
+
 ### Frontend
-React Native 0.81     - Cross-platform mobile framework
-Expo 54               - React Native development platform
-React 19              - Web components (optional)
-Axios                 - HTTP client
-TypeScript            - Type safety
+- React Native 0.81 - Cross-platform mobile framework
+- Expo 54 - React Native development platform
+- React 19 - Web components (optional)
+- Axios - HTTP client
+- TypeScript - Type safety
+
 ### Deployment & Infrastructure
-Backend: Railway (Cloud)
-Mobile:   Expo Publishing (OTA updates)
-Database: Auto-generated SQL schemas
-API:      RESTful with OpenAPI/Swagger
+- Backend: Railway (Cloud)
+- Mobile: Expo Publishing (OTA updates)
+- Database: Auto-generated SQL schemas
+- API: RESTful with OpenAPI/Swagger
+
 ---
 
 ## 🚀 Quick Start Guide
@@ -104,174 +107,48 @@ API:      RESTful with OpenAPI/Swagger
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/farooqKhansa/archgeneration_ai.git
-cd archgeneration_ai
-```
+https://archgenerationai-production.up.railway.app
 
-### 2️⃣ Backend Setup
-
+**Step 4: Test Deployment**
 ```bash
-# Create virtual environment
-python3 -m venv venv
+# Health check
+curl https://archgenerationai-production.up.railway.app/health
 
-# Activate (Linux/Mac)
-source venv/bin/activate
-
-# Activate (Windows)
-# venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Create .env file
-cat > .env << 'ENVFILE'
-GEMINI_API_KEY=your_api_key_here
-ENVFILE
-
-# Get API Key from: https://aistudio.google.com
+# API docs
+https://archgenerationai-production.up.railway.app/docs
 ```
 
-### 3️⃣ Start Backend Server
-
-```bash
-python3 -m uvicorn main:app --reload --port 8000
-```
-
-**You should see:**
-INFO:     Uvicorn running on http://127.0.0.1:8000
-INFO:     Application startup complete
-
-### 4️⃣ Access Services
-Interactive API Docs:   http://localhost:8000/docs
-Alternative Docs:       http://localhost:8000/redoc
-Health Check:          http://localhost:8000/health
-OpenAPI Schema:        http://localhost:8000/openapi.json
-### 5️⃣ Test the System
-
-```bash
-# Simple health check
-curl http://localhost:8000/health
-
-# Full analysis example
-curl -X POST http://localhost:8000/analyze/full \
-  -H "Content-Type: application/json" \
-  -d '{"requirements": "E-commerce system with products, shopping cart, and payment processing"}'
-```
-
----
-
-## 📡 API Endpoints
-
-### Upload Requirements File
-```bash
-POST /upload
-Content-Type: multipart/form-data
-
-curl -X POST http://localhost:8000/upload \
-  -F "file=@requirements.pdf"
-
-Response: {
-  "filename": "requirements.pdf",
-  "content": "Extracted text from PDF...",
-  "message": "Requirements file uploaded successfully"
-}
-```
-
-### Full Analysis Pipeline (Recommended)
-```bash
-POST /analyze/full
-Content-Type: application/json
-
-curl -X POST http://localhost:8000/analyze/full \
-  -H "Content-Type: application/json" \
-  -d '{
-    "requirements": "Your system requirements here"
-  }'
-
-Response: {
-  "requirements": {...},
-  "architecture": {...},
-  "uml": {...},
-  "database": {...},
-  "test_cases": {...},
-  "bootstrap": {...},
-  "report": {...},
-  "antigravity_trace": {
-    "agents": [...],
-    "total_duration_ms": 18000
-  }
-}
-```
-
-### Real-Time Agent Progress (SSE)
-```bash
-GET /analyze/stream?raw_text=<requirements>
-
-# Live updates from agents
-```
-
-### Health Check
-```bash
-GET /health
-
-Response: {"status": "ok", "antigravity": "connected"}
-```
-
----
-
-## 🤖 Google Antigravity Integration
-
-This project uses 5 Google Antigravity Managed Agents:
-
-1. **Requirements Agent** - Extracts and structures requirements
-2. **Architecture Agent** - Recommends design patterns
-3. **UML Agent** - Generates visual diagrams
-4. **Database Agent** - Designs database schemas
-5. **Testing Agent** - Creates test cases
-
-Each agent uses the same pattern:
-```python
-from google import genai
-client = genai.Client()
-interaction = client.interactions.create(
-    agent="antigravity-preview-05-2026",
-    input="your task",
-    environment="remote",
-)
-result = interaction.output_text
-```
-
----
-
-## 🌍 Deployment
-
-### Backend Deployment
-
-**Glitch.com (Recommended)**
-### Mobile App
+### Mobile App Deployment (Expo)
 
 ```bash
 cd frontend-mobile
+
+# Publish to Expo
 npx expo publish
-# Get link: exp://exp.host/@farooqkhansa/archgen-app
+
+# Or use:
+npx expo publish --release-channel production
+
+# Get shareable link: exp://exp.host/@farooqkhansa/archgen-app
 ```
 
 ---
 
 ## 🏆 Google Antigravity Challenge 2026
 
-### Submission Package:
-- ✅ Mobile App (Expo)
-- ✅ Backend (Cloud-deployed)
-- ✅ GitHub Repository
-- ✅ Demo Videos
-- ✅ Documentation
-- ✅ Antigravity Traces
+### Submission Details:
+- **Project**: ArchGen AI
+- **Team**: Khansa Farooq
+- **Challenge**: Software Architecture Generation
+- **Antigravity Agents Used**: 5 (Requirements, Architecture, UML, Database, Testing)
 
-### Links:
-- **GitHub**: https://github.com/farooqKhansa/archgeneration_ai
+### Deployment Links:
+- **GitHub Repository**: https://github.com/farooqKhansa/archgeneration_ai
+- **Backend API**: https://archgenerationai-production.up.railway.app
+- **API Documentation**: https://archgenerationai-production.up.railway.app/docs
 - **Mobile App**: exp://exp.host/@farooqkhansa/archgen-app
-- **Backend API**: https://archgen-ai-backend.onrender.com/docs
+- **Demo Video**: [See YouTube link]
+- **Antigravity Implementation**: See agents/ folder in GitHub
 
 ---
 
@@ -286,10 +163,10 @@ MIT License - Open source and free to use
 **Developer**: Khansa Farooq
 
 **Built With**:
-- 🤖 Google Antigravity
+- 🤖 Google Antigravity Managed Agents
 - ⚡ FastAPI
-- 📱 React Native
-- ☁️ Cloud Deployment
+- 📱 React Native with Expo
+- ☁️ Railway Cloud Deployment
 
 ---
 
